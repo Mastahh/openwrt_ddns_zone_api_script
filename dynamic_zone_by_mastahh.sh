@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Use Command for testing
-# /usr/lib/ddns/dynamic_dns_updater.sh -S zone_msth_eu -v 1
+# /usr/lib/ddns/dynamic_dns_updater.sh -S service_name -v 1
 
 local __URL="https://api.zone.eu/v2/dns/[DOMAIN]/a/[PARAMOPT]"
 local __TOKEN="[USERNAME]:[PASSWORD]"
@@ -22,16 +22,6 @@ __JSON_DATA=$(echo $__JSON_DATA | sed -e "s#\[IP\]#$__IP#g")
 
 # do replaces in TOKEN
 __TOKEN=$(echo -n $__TOKEN | sed -e "s#\[USERNAME\]#$URL_USER#g" -e "s#\[PASSWORD\]#$URL_PASS#g" | base64 -w 0)
-
-# echo "echo URL" $__URL
-# echo "echo JSON" $__JSON_DATA
-# echo "echo Authorization: Basic" $__TOKEN
-
-# curl -X PUT "$__URL" \
-		# -H "Authorization: Basic $__TOKEN" \
-		# -H "Content-Type: application/json" \
-		# -d "$__JSON_DATA" \
-		# -v
 	
 http_code=$(curl -s -o /dev/null -w "%{http_code}" \
 		-X PUT "$__URL" \
